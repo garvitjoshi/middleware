@@ -7,25 +7,30 @@ export default class SnowService {
   public openCase = async (req, res, data): Promise<any> => {
     try {
       const params = {
-        u_caller: data.u_caller, // user Ldap
-        u_short_description: data.u_short_description, // "BlueJeans feedback received"
-        u_assignment_group: data.u_assignment_group, // "Conferencing Ops"
-        u_description: data.u_description, // "Negative feedback received for " + count + " BlueJeans meetings last week"
-        u_category: data.u_category, // "Notify/Alert"
-        u_subcategory: data.u_subcategory, // "Threshold Exceeded"
-        u_configuration_item: data.u_configuration_item, // "BlueJeans"
-        u_contact_type: data.u_contact_type, // "monitor"
-        u_case_type: data.u_case_type, // "Break/Fix"
-        u_priority: data.u_priority // "3"
-      };
-
-      const snowToken = await this.checkAuthToken(req, res);
+        u_priority: data.u_priority,
+        u_caller: data.u_caller,
+        u_assignment_group: data.u_assignment_group,
+        u_assigned_to: data.u_assigned_to,
+        u_category: data.u_category,
+        u_subcategory: data.u_subcategory,
+        u_case_type: data.u_case_type,
+        u_contact_type: data.u_contact_type,
+        u_business_service: data.u_business_service,
+        u_configuration_item: data.u_configuration_item,
+        u_short_description: data.u_short_description,
+        u_description: data.u_description,
+        u_work_notes: data.u_work_notes,
+        u_resolution_notes: data.u_resolution_notes,
+        u_case_categorization: data.u_case_categorization,
+        state: data.state,
+        u_complexity: data.u_complexity
+      }
 
       const options = {
         headers: {
           "Content-Type": "application/json",
           api_key: config.SNOW_API_KEY,
-          Authorization: snowToken
+          Authorization: await this.checkAuthToken(req, res)
         }
       };
 
@@ -48,9 +53,9 @@ export default class SnowService {
   public closeCase = async (req, res, data): Promise<any> => {
     try {
       const params = {
-        u_number: data.u_number, // case no.
-        u_state: data.u_state, // "Resolved"
-        u_resolution_notes: data.u_resolution_notes // close_notes
+        u_number: data.u_number,
+        state: data.state,
+        u_resolution_notes: data.u_resolution_notes
       }
 
       const options = {
@@ -114,20 +119,16 @@ export default class SnowService {
     try {
       if (req.session.snow) {
         if (req.session.snow.access_token) {
-          console.log("session token", req.session.snow.access_token);
           return req.session.snow.access_token;
         } else {
-          console.log("Generate new token1 ");
           const result = await this.generateAuthCode(req, res);
-          console.log("this is new token", result.access_token);
           req.session.snow = { access_token: result.access_token };
           return result.access_token;
         }
       } else {
-        console.log("Generate new token2 ");
         const result = await this.generateAuthCode(req, res);
-        console.log("this is new token", result.access_token);
         req.session.snow = { access_token: result.access_token };
+        // console.log(result.access_token);
         return result.access_token;
       }
     } catch (err) {
