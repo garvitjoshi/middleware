@@ -92,17 +92,18 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 
 ### Available routes
 
-| Method   | Resource             | Description                                                                                                                                   |
-| :------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------   |
-| `POST`   | `/clients/register`  | Create a new client in the DB. You need to specify in the body the following attributes: name, client_id & client_secret.                     |
-| `POST`   | `/authenticate`      | Sign in with the client_id & client_secret. If it's successful, then generates a token                                                        |
-| `GET`    | `/clients`           | Returns the collection of clients present in the DB.                                                                                          |
-| `GET`    | `/clients/:id`       | It returns the specified id client. You need to specify the token in the header with the following format: `Authorization: Bearer your-token` |
-| `PUT`    | `/clients/:id`       | Updates an already created client in the DB                                                                                                   |
-<!-- | `DELETE` | `/clients/:id`       | Deletes a client from the DB                                                                                                                  | -->
+| Method    | Resource             | Description                                                                                                                                   |
+| :-------  | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------   |
+| `POST`    | `/clients/register`  | Create a new client in the DB. You need to specify in the body the following attributes: name, client_id & client_secret.                     |
+| `POST`    | `/authenticate`      | Sign in with the client_id & client_secret. If it's successful, then generates a token                                                        |
+|           |                      | You need to specify the token in the header with the following format: `Authorization: Bearer your-token` in Below Api's.                     |
 | `POST`    | `/snow/openCase`     | Create snow ticket                                                                                                                            |
 | `POST`    | `/snow/closeCase`    | Modify snow ticket                                                                                                                            |
-| `POST` | `/snow/openCloseCase`| Create and modify snow ticket                                                                                                                 |
+| `POST`    | `/snow/openCloseCase`| Create and modify snow ticket                                                                                                                 |
+<!-- | `GET`    | `/clients`           | Returns the collection of clients present in the DB.                                                                                      |
+| `GET`    | `/clients/:id`       | It returns the specified id client. You need to specify the token in the header with the following format: `Authorization: Bearer your-token` |
+| `PUT`    | `/clients/:id`       | Updates an already created client in the DB                                                                                                   |
+| `DELETE` | `/clients/:id`       | Deletes a client from the DB                                                                                                                  | -->
 
 ### Available scripts
 
