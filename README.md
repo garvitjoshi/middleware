@@ -99,10 +99,10 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 | `GET`    | `/clients`           | Returns the collection of clients present in the DB.                                                                                          |
 | `GET`    | `/clients/:id`       | It returns the specified id client. You need to specify the token in the header with the following format: `Authorization: Bearer your-token` |
 | `PUT`    | `/clients/:id`       | Updates an already created client in the DB                                                                                                   |
-| `DELETE` | `/clients/:id`       | Deletes a client from the DB                                                                                                                  |
-| `GET`    | `/snow/openCase`     | Create snow ticket                                                                                                                            |
-| `PUT`    | `/snow/closeCase`    | Modify snow ticket                                                                                                                            |
-| `DELETE` | `/snow/openCloseCase`| Create and modify snow ticket                                                                                                                 |
+<!-- | `DELETE` | `/clients/:id`       | Deletes a client from the DB                                                                                                                  | -->
+| `POST`    | `/snow/openCase`     | Create snow ticket                                                                                                                            |
+| `POST`    | `/snow/closeCase`    | Modify snow ticket                                                                                                                            |
+| `POST` | `/snow/openCloseCase`| Create and modify snow ticket                                                                                                                 |
 
 ### Available scripts
 
