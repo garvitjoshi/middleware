@@ -39,9 +39,9 @@ export default class clientService {
     }
   };
 
-  public findOne = async (req, res): Promise<any> => {
+  public findOneByClientId = async (req, res, client_id): Promise<any> => {
     try {
-      const client = await Client.find({ client_id: req.params.id });
+      const client = await Client.find({ client_id: client_id });
       return client;
     } catch (err) {
       res.status(500).send({
@@ -74,7 +74,7 @@ export default class clientService {
 
   public remove = async (req, res): Promise<any> => {
     try {
-      const client = await Client.findByIdAndRemove(req.params.id);
+      const client = await Client.findByIdAndRemove(req.params.client_id);
       return client;
     } catch (err) {
       res.status(500).send({

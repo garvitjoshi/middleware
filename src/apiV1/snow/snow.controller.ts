@@ -1,19 +1,28 @@
 import { Request, Response } from "express";
 
+import ClientService from "../clients/client.service";
 import SnowService from "./snow.service";
 
 const snowService = new SnowService();
+const clientService = new ClientService();
+
 
 export default class SnowController {
 
+  private api_access = false;
+
   public openCase = async (req: Request, res: Response): Promise<any> => {
     try {
-      const data = this.openCaseValidation(req, res);
-      const result = await snowService.openCase(req, res, data);
-      res.status(200).send({
-        success: true,
-        data: result
-      });
+      await this.checkApiAccess(req, res);
+
+      if(this.api_access === true){
+        const data = this.openCaseValidation(req, res);
+        const result = await snowService.openCase(req, res, data);
+        res.status(200).send({
+          success: true,
+          data: result
+        });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -25,12 +34,16 @@ export default class SnowController {
 
   public closeCase = async (req: Request, res: Response): Promise<any> => {
     try {
-      const data = this.closeCaseValidation(req, res, '');
-      const result = await snowService.closeCase(req, res, data);
-      res.status(200).send({
-        success: true,
-        data: result
-      });
+      await this.checkApiAccess(req, res);
+
+      if(this.api_access === true){
+        const data = this.closeCaseValidation(req, res, '');
+        const result = await snowService.closeCase(req, res, data);
+        res.status(200).send({
+          success: true,
+          data: result
+        });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -43,18 +56,22 @@ export default class SnowController {
 
   public openCloseCase = async (req: Request, res: Response): Promise<any> => {
     try {
-      const data = this.openCaseValidation(req, res);
-      const caseResult = await snowService.openCase(req, res, data);
+      await this.checkApiAccess(req, res);
 
-      const caseNo = caseResult.result[0].display_value;
+      if(this.api_access === true){
+        const data = this.openCaseValidation(req, res);
+        const caseResult = await snowService.openCase(req, res, data);
 
-      const data1 = this.closeCaseValidation(req, res, caseNo);
-      const result = await snowService.closeCase(req, res, data1);
+        const caseNo = caseResult.result[0].display_value;
 
-      res.status(200).send({
-        success: true,
-        data: result
-      });
+        const data1 = this.closeCaseValidation(req, res, caseNo);
+        const result = await snowService.closeCase(req, res, data1);
+
+        res.status(200).send({
+          success: true,
+          data: result
+        });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -228,5 +245,39 @@ export default class SnowController {
     }
 
     return data;
+  }
+
+  private checkApiAccess = async (req, res): Promise<any> => {
+    let client_id = '';
+    this.api_access = false;
+    if(res.locals.client_id){
+      client_id = res.locals.client_id
+    }else{
+      res.status(200).send({
+        success: false,
+        message: "Clent Id can not be empty",
+      });
+    }
+    const client = await clientService.findOneByClientId(req, res, client_id)
+    if(!client){
+      res.status(200).send({
+        success: false,
+        message: "Clent not found",
+      });
+    }
+    if(client[0]['apis_access']){
+      const apis_access = client[0].apis_access;
+      apis_access.forEach(e => {
+        if(e.api_name == 'snow'){
+          this.api_access = true;
+        }
+      });
+    }
+    if(this.api_access === false){
+      res.status(200).send({
+        success: false,
+        message: "You don't have apis access contact administrator"
+      });
+    }
   }
 }
