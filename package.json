@@ -11,7 +11,11 @@
     "build-start": "nodemon ./dist/index.js",
     "prod": "npm run build && npm run build-start"
   },
-  "keywords": ["OPS-MIddleware", "SNOW API'S", "Rest Api's"],
+  "keywords": [
+    "OPS-MIddleware",
+    "SNOW API'S",
+    "Rest Api's"
+  ],
   "author": "gajoshi@adobe.com",
   "license": "MIT",
   "dependencies": {

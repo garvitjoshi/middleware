@@ -49,9 +49,9 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 
 1. install the dependencies using `npm install` or `npm i`
 
-2. Rename the file `.env.example` to `.env`, then you need to configure the file `config.ts` located in `src/config`
+2. copy the file `.env.local` to `.env`
 
-3. Start the app using `npm run dev`
+3. Start the app using `npm start`
 
 4. After that, go to: `http://localhost:3000/`
 
@@ -79,7 +79,8 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 │   ├── helpers
 │   │   ├── errorHandler.ts
 │   │   └── verifyToken.ts
-│   ├── .env.example
+│   ├── .env.dev
+|   ├── .env.local
 │   ├── App.ts
 │   └── index.ts
 ├── .editorconfig

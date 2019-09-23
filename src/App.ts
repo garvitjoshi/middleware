@@ -6,6 +6,7 @@ import * as helmet from "helmet";
 import * as morgan from "morgan";
 import * as session from "express-session";
 
+import CONFIG from './config/config';
 import apiV1 from "./apiV1/index";
 
 class App {
@@ -22,7 +23,7 @@ class App {
     this.express.use(cors());
     this.express.use(morgan("dev"));
     this.express.use(
-      session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true })
+      session({ secret: CONFIG.EXPRESS_SESSION, saveUninitialized: true, resave: true })
     );
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
