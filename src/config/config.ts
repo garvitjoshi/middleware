@@ -7,11 +7,11 @@ export default {
   PORT: process.env.PORT || '3000',
 
   DB_MONGO_DIALECT: process.env.DB_MONGO_DIALECT || 'mongo',
-  DB_MONGO_HOST: process.env.DB_MONGO_HOST || 'mongodb://localhost:27017/example_db',
-  DB_MONGO_PORT: process.env.DB_MONGO_PORT || '27017',
-  DB_MONGO_NAME: process.env.DB_MONGO_NAME || 'example_db',
-  DB_MONGO_USER: process.env.DB_MONGO_USER || 'root',
-  DB_MONGO_PASSWORD: process.env.DB_MONGO_PASSWORD || 'password',
+  DB_MONGO_HOST: process.env.DB_MONGO_HOST || 'papaya-b',
+  DB_MONGO_PORT: process.env.DB_MONGO_PORT || '27031',
+  DB_MONGO_NAME: process.env.DB_MONGO_NAME || 'OPSMONGO',
+  DB_MONGO_USER: process.env.DB_MONGO_USER || 'OPSMONGO',
+  DB_MONGO_PASSWORD: process.env.DB_MONGO_PASSWORD || 'pA_r3MP3004',
 
   JWT_ENCRYPTION: process.env.JWT_ENCRYPTION || 'jwt_please_change',
   JWT_EXPIRATION: process.env.JWT_EXPIRATION || '1h',

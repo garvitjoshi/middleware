@@ -276,7 +276,7 @@ export default class SnowController {
     if(this.api_access === false){
       res.status(200).send({
         success: false,
-        message: "You don't have apis access contact administrator"
+        message: "You don't have api access contact administrator"
       });
     }
   }
