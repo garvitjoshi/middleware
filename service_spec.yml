@@ -1,0 +1,94 @@
+# Latest service_spec.yml file can be obtained from https://git.corp.adobe.com/adobe-platform/service-spec/blob/master/spec.yaml
+
+service_name: opsmiddleware
+
+# Specify the owner of the service. Required for CCF compliance.
+adobe_owner: opsengg
+
+# Possible values are: Public, Internal, Confidential, Restricted.
+data_classification: [Internal, Confidential]
+
+#How to obtain correct cost center for your service: https://wiki.corp.adobe.com/display/ethos/OrCA+-+Cost+Center
+adobe_cost_centers:
+  # Mandatory if Dev or Stage environment is present
+  # ADUS cost center is required in case of opex (Operational Expense)
+  opex:
+    # ADUS cost center (US-based)
+    adus: 101289
+  # Mandatory if Prod environment is present.
+  # Both ADUS and ADIR cost centers are required in case of cogs (Cost of Goods Sold)
+  cogs:
+    # ADUS cost center (US-based)
+    adus: 101289
+    # ADIR cost center (Ireland-based)
+    adir: 5412345
+
+alerts:
+  # Used to send the notification mails to the given list of IDs.
+  # Accepts an array of email IDs.
+  # At least one email ID is mandatory. Required for CCF compliance.
+  emails: [gajoshi@adobe.com]
+
+
+
+
+# Mandatory
+# List of teams and their associated roles.
+# There should be at least one item in this array.
+# Only pre-defined roles can be used. The pre-defined roles are:
+#   1. ethos_deployments_admin - Grants admin permissions on Moonbeam and Flight Director.
+#   2. ethos_deployments_deployer - Grants deploy permissions on Moonbeam and Flight Director.
+# At least one team should have 'ethos_deployments_admin' role.
+# The person onboarding or re-onboarding the service should be part of atleast one team with 'ethos_deployments_admin' role.
+# 'Mandatory' for new services getting onboarded.
+# 'Optional' for existing services getting re-onboarded, for backward compatibility reasons.
+team_access_control:
+  -
+    # Mandatory
+    # Name of one of Github teams attached with this repository.
+    name: admin-team
+    # Mandatory
+    # Array of roles. Allowed value are one or more of the pre-defined roles mentioned above.
+    roles: [ethos_deployments_admin]
+  -
+    name: deploy-team
+    # Default value for role is 'ethos_deployments_deployer'.
+    # roles: [ethos_deployments_deployer]
+
+
+
+images:
+  - id: opsmiddleware-img
+
+containers:
+  - id: opsmiddleware
+    image_id: opsmiddleware-img
+    # Allowed values: DB, Cache, Worker, Router, AppServer, WebServer, DockerHost, LB, other (in case the none of listed values applies).
+    class: AppServer
+    # See https://git.corp.adobe.com/adobe-platform/service-spec/blob/60b4cca08bacb91657c20761939716b93f361a9a/spec.yaml#L141
+    arch_path: ct.opsengg.test
+
+environments:
+  - name: Dev
+    cluster_type: STAGE
+    rollback_on_failure: true
+    containers:
+      - id: opsmiddleware
+        topology: inet
+        inet_port: 8080
+        health_check:
+          path: /ping
+        cpus: 1
+        mem: 2048
+        instances: 1
+        
+        # By default, Glider creates services that are only accessible via Adobe egress IPs.
+        # If you wish to change this behavior, see https://git.corp.adobe.com/adobe-platform/service-spec/blob/f7d7969177b9eddad9b7bc991f4fbbab506b5fd8/spec.yaml#L341-L352
+        access_level: corp
+     
+    regions:
+        - name: va6
+
+
+
+
