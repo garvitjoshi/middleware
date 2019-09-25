@@ -13,7 +13,7 @@ COPY package*.json ./
 RUN npm install --production
 
 COPY --from=builder /usr/app/dist ./dist
-COPY .env .
+COPY .env.dev .env
 
-EXPOSE 3000
+EXPOSE 8080
 CMD node dist/index.js
