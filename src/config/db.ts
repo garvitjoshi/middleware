@@ -16,7 +16,7 @@ export default (async () => {
 
   try {
     await mongoose.connect(
-      `${mongo.MONGO_URL}${mongo.MONGO_DB_NAME}`,
+      `mongodb://opsengg:mF0cWT0Z6cw51AzXrCOnxKfXuEbTHRSwH7VZ5nVF8uQyOKaPLziIrCF2qlr1dxgmxQZXrhRovu7y9arMT1EuKw==@opsengg.documents.azure.com:10255/OPSMONGO?ssl=true`,
       { useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false }
