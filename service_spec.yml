@@ -81,13 +81,13 @@ environments:
         cpus: 1
         mem: 2048
         instances: 1
-        
+
         # By default, Glider creates services that are only accessible via Adobe egress IPs.
         # If you wish to change this behavior, see https://git.corp.adobe.com/adobe-platform/service-spec/blob/f7d7969177b9eddad9b7bc991f4fbbab506b5fd8/spec.yaml#L341-L352
         access_level: corp
-     
+
     regions:
-        - name: va6
+        - name: va7
 
 
 
