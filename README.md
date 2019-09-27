@@ -108,7 +108,6 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 
 ### Available scripts
 
-
 - `start` - To run the app without transpile to ES6
 - `clean` - Remove dist, node_modules, coverage folders,
 - `lint` - Lint your TS code,
