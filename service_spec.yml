@@ -69,7 +69,7 @@ containers:
     arch_path: ct.opsengg.test
 
 environments:
-  - name: AWS
+  - name: Dev
     cluster_type: STAGE
     rollback_on_failure: true
     containers:
@@ -85,7 +85,7 @@ environments:
     regions:
         - name: va6
 
-  - name: Azure
+  - name: Dev2
     cluster_type: STAGE
     rollback_on_failure: true
     containers:
