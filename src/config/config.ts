@@ -4,6 +4,7 @@ import { resolve } from "path"
 config({ path: resolve(__dirname, "../../.env") })
 
 export default {
+  URL:process.env.OPS_URL,
   APP: process.env.OPS_APP,
   PORT: process.env.OPS_PORT,
   EXPRESS_SESSION: process.env.OPS_EXPRESS_SESSION,
