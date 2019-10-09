@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://middleware.ops-engg.corp.adobe.com/api/v1"
+      "url": "http://middleware.ops-engg-dev.corp.adobe.com/api/v1"
     }
   ],
   "tags": [
