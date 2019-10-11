@@ -14,14 +14,14 @@ adobe_cost_centers:
   # ADUS cost center is required in case of opex (Operational Expense)
   opex:
     # ADUS cost center (US-based)
-    adus: 101289
+    adus: 102410
   # Mandatory if Prod environment is present.
   # Both ADUS and ADIR cost centers are required in case of cogs (Cost of Goods Sold)
   cogs:
     # ADUS cost center (US-based)
-    adus: 101289
+    adus: 102410
     # ADIR cost center (Ireland-based)
-    adir: 5412345
+    adir: 5490203
 
 alerts:
   # Used to send the notification mails to the given list of IDs.
