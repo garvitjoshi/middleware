@@ -193,8 +193,8 @@
           "u_description",
           "u_work_notes",
           "u_resolution_notes",
-          "u_case_categorization",
-          "state"
+          "state",
+          "u_complexity"
         ],
         "properties": {
           "u_priority": {
@@ -253,10 +253,6 @@
             "type": "string",
             "example": "Room View details has been added for requested room."
           },
-          "u_case_categorization": {
-            "type": "string",
-            "example": "Communications and Collaboration"
-          },
           "state": {
             "type": "string",
             "example": "Resolved"
@@ -264,6 +260,10 @@
           "u_complexity": {
             "type": "string",
             "example": "Low"
+          },
+          "u_case_categorization": {
+            "type": "string",
+            "example": "Communications and Collaboration"
           }
         }
       },
@@ -306,8 +306,8 @@
           "u_description",
           "u_work_notes",
           "u_resolution_notes",
-          "u_case_categorization",
-          "state"
+          "state",
+          "u_complexity"
         ],
         "properties": {
           "u_priority": {
@@ -366,10 +366,6 @@
             "type": "string",
             "example": "Room View details has been added for requested room."
           },
-          "u_case_categorization": {
-            "type": "string",
-            "example": "Communications and Collaboration"
-          },
           "state": {
             "type": "string",
             "example": "Resolved"
@@ -377,6 +373,10 @@
           "u_complexity": {
             "type": "string",
             "example": "Low"
+          },
+          "u_case_categorization": {
+            "type": "string",
+            "example": "Communications and Collaboration"
           }
         }
       }
