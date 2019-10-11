@@ -10,13 +10,20 @@ const clientService = new ClientService();
 export default class ClientController {
   public register = async (req: Request, res: Response): Promise<any> => {
     try {
-      const data = this.registerValidation(req, res);
-      const result = await clientService.insert(req, res, data);
-      res.status(201).send({
-        success: true,
-        message: "Client Successfully created",
-        data: result
-      });
+      if (!req.headers.token) {
+        return res.status(403).send({ auth: false, message: 'Admin token is not provided in header.' });
+      }
+      if (Number(req.headers.token) == config.ADMIN_CLIENT_TOKEN) {
+        const data = this.registerValidation(req, res);
+        const result = await clientService.insert(req, res, data);
+        res.status(201).send({
+          success: true,
+          message: "Client Successfully created",
+          data: result
+        });
+      } else {
+        return res.status(403).send({ auth: false, message: 'Invalid admin token in header.' });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -27,11 +34,18 @@ export default class ClientController {
 
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      const clients = await clientService.findAll(req, res);
-      res.status(200).send({
-        success: true,
-        data: clients
-      });
+      if (!req.headers.token) {
+        return res.status(403).send({ auth: false, message: 'Admin token is not provided in header.' });
+      }
+      if (Number(req.headers.token) == config.ADMIN_CLIENT_TOKEN) {
+        const clients = await clientService.findAll(req, res);
+        res.status(200).send({
+          success: true,
+          data: clients
+        });
+      } else {
+        return res.status(403).send({ auth: false, message: 'Invalid admin token in header.' });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -43,21 +57,31 @@ export default class ClientController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      let client_id = '';
-      if(req.params.client_id){
-        client_id = req.params.client_id
-      }else{
-        res.status(200).send({
-          success: false,
-          message: "Clent Id can not be empty",
-        });
+      if (!req.headers.token) {
+        return res.status(403).send({ auth: false, message: 'Admin token is not provided in header.' });
       }
+      if (Number(req.headers.token) == config.ADMIN_CLIENT_TOKEN) {
+        let client_id = '';
+        if (req.params.client_id) {
+          client_id = req.params.client_id
+        } else {
+          res.status(200).send({
+            success: false,
+            message: "Client Id can not be empty in parameters",
+          });
+        }
+        const client = await clientService.findOneByClientId(req, res, client_id);
 
-      const client = await clientService.findOneByClientId(req, res, client_id);
-      res.status(200).send({
-        success: true,
-        data: client
-      });
+        if (!client.length) {
+          return res.status(403).send({ auth: false, message: 'client_id is not found in database.' });
+        }
+        res.status(200).send({
+          success: true,
+          data: client
+        });
+      } else {
+        return res.status(403).send({ auth: false, message: 'Invalid admin token in header.' });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -69,41 +93,60 @@ export default class ClientController {
 
   public update = async (req: Request, res: Response): Promise<any> => {
     try {
-      let changes = {};
-
-      if (req.body.name) {
-        changes["name"] = req.body.name;
+      if (!req.headers.token) {
+        return res.status(403).send({ auth: false, message: 'Admin token is not provided in header.' });
       }
 
-      if (req.body.client_id) {
-        changes["client_id"] = req.body.client_id;
-      }
-
-      if (req.body.client_secret) {
-        const hash = await bcrypt.hash(
-          req.body.client_secret,
-          config.SALT_ROUNDS
-        );
-        changes["client_secret"] = hash;
-      }
-
-      if (req.body.apis_access) {
-        changes["apis_access"] = req.body.apis_access;
-      }
-
-      const clientUpdated = await clientService.update(req, res, changes);
-
-      if (!clientUpdated) {
-        return res.status(404).send({
+      let client_id = '';
+      if (req.params.client_id) {
+        client_id = req.params.client_id
+      } else {
+        res.status(202).send({
           success: false,
-          message: "Client not found",
-          data: null
+          message: "Client Id can not be empty in parameters",
         });
       }
-      res.status(200).send({
-        success: true,
-        data: clientUpdated
-      });
+      const client = await clientService.findOneByClientId(req, res, client_id);
+      if (!client.length) {
+        return res.status(403).send({ auth: false, message: 'client_id is not found in database.' });
+      }
+
+      if (Number(req.headers.token) == config.ADMIN_CLIENT_TOKEN) {
+
+        let changes = {};
+
+        if (req.body.name) {
+          changes["name"] = req.body.name;
+        }
+
+        if (req.body.client_secret) {
+          const hash = await bcrypt.hash(
+            req.body.client_secret,
+            config.ENCRYPTION_SALT
+          );
+          changes["client_secret"] = hash;
+        }
+
+        if (req.body.apis_access) {
+          changes["apis_access"] = req.body.apis_access;
+        }
+
+        const clientUpdated = await clientService.update(req, res, client_id, changes);
+
+        if (!clientUpdated) {
+          return res.status(404).send({
+            success: false,
+            message: "Client not found",
+            data: null
+          });
+        }
+        res.status(200).send({
+          success: true,
+          data: clientUpdated
+        });
+      } else {
+        return res.status(403).send({ auth: false, message: 'Invalid admin token in header.' });
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -138,31 +181,31 @@ export default class ClientController {
   //   }
   // };
 
-  private registerValidation(req, res){
+  private registerValidation(req, res) {
     let data = {}
     let empty_data = {};
 
-    if(req.body.name){
+    if (req.body.name) {
       data["name"] = req.body.name
-    }else{
+    } else {
       empty_data['name'] = '';
     }
 
     // "Resolved"
-    if(req.body.client_id){
+    if (req.body.client_id) {
       data["client_id"] = req.body.client_id
-    }else{
+    } else {
       empty_data['client_id'] = '';
     }
 
     // close_notes
-    if(req.body.client_secret){
+    if (req.body.client_secret) {
       data["client_secret"] = req.body.client_secret
-    }else{
+    } else {
       empty_data['client_secret'] = '';
     }
 
-    if( Object.keys(empty_data).length !== 0){
+    if (Object.keys(empty_data).length !== 0) {
       res.status(200).send({
         success: false,
         message: "data can not be empty",

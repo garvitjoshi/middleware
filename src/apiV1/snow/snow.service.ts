@@ -24,7 +24,7 @@ export default class SnowService {
         u_case_categorization: data.u_case_categorization,
         state: data.state,
         u_complexity: data.u_complexity
-      }
+      };
 
       const options = {
         headers: {
@@ -56,7 +56,7 @@ export default class SnowService {
         u_number: data.u_number,
         state: data.state,
         u_resolution_notes: data.u_resolution_notes
-      }
+      };
 
       const options = {
         headers: {

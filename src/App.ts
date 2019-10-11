@@ -40,6 +40,13 @@ class App {
 
   private setRoutes(): void {
     this.express.use("/api/v1", apiV1);
+    this.express.get('/ping', (req, res, next) => {
+      const obj = {
+        status:'ok',
+        envName:CONFIG.APP
+      };
+      res.json(obj);
+    });
     this.express.use("/api-docs", swaggerUi.serve);
     this.express.get("/api-docs", swaggerUi.setup(swaggerDocument));
   }
