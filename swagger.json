@@ -23,8 +23,8 @@
       "description": "For Service-Now(SNOW) API's"
     },
     {
-      "name": "smartsheet",
-      "description": "For Smartsheet API's"
+      "name": "purecloud",
+      "description": "For PureCloud API's"
     }
   ],
   "paths": {
