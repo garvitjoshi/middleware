@@ -53,7 +53,6 @@ export default class SnowController {
     }
   };
 
-
   public openCloseCase = async (req: Request, res: Response): Promise<any> => {
     try {
       await this.checkApiAccess(req, res);
@@ -250,8 +249,8 @@ export default class SnowController {
   private checkApiAccess = async (req, res): Promise<any> => {
     let client_id = '';
     this.api_access = false;
-    if(res.locals.client_id){
-      client_id = res.locals.client_id
+    if(req.headers.client_id){
+      client_id = req.headers.client_id
     }else{
       res.status(200).send({
         success: false,
@@ -262,7 +261,7 @@ export default class SnowController {
     if(!client){
       res.status(200).send({
         success: false,
-        message: "Clent not found",
+        message: "Clent not found in database",
       });
     }
     if(client[0]['apis_access']){

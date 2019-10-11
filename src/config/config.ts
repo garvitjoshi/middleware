@@ -6,8 +6,10 @@ config({ path: resolve(__dirname, "../../.env") })
 export default {
   URL:process.env.OPS_URL,
   APP: process.env.OPS_APP,
-  PORT: process.env.OPS_PORT,
+  PORT: Number(process.env.OPS_PORT),
   EXPRESS_SESSION: process.env.OPS_EXPRESS_SESSION,
+  ADMIN_CLIENT_TOKEN: Number(process.env.OPS_ADMIN_CLIENT_TOKEN),
+  ENCRYPTION_SALT: Number(process.env.OPS_ENCRYPTION_SALT),
 
   DB_MONGO_DIALECT: process.env.OPS_DB_MONGO_DIALECT,
   DB_MONGO_HOST: process.env.OPS_DB_MONGO_HOST,
@@ -18,7 +20,6 @@ export default {
 
   JWT_ENCRYPTION: process.env.OPS_JWT_ENCRYPTION,
   JWT_EXPIRATION: Number(process.env.OPS_JWT_EXPIRATION),
-  SALT_ROUNDS: Number(process.env.OPS_SALT_ROUNDS),
 
   SNOW_URL:process.env.OPS_SNOW_URL,
   SNOW_GRANT_TYPE:process.env.OPS_SNOW_GRANT_TYPE,

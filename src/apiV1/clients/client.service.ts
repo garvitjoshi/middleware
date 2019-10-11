@@ -1,15 +1,14 @@
 import * as bcrypt from "bcrypt";
-import * as qs from "qs";
 
 import Client from "./client.model";
 import config from "../../config/config";
 
-export default class clientService {
+export default class ClientService {
   public insert = async (req, res, data): Promise<any> => {
     try {
       const { name, client_id, client_secret } = data;
 
-      const hash = await bcrypt.hash(client_secret, config.SALT_ROUNDS);
+      const hash = await bcrypt.hash(client_secret, config.ENCRYPTION_SALT);
       const client = new Client({
         name,
         client_id,
@@ -52,11 +51,11 @@ export default class clientService {
     }
   };
 
-  public update = async (req, res, data): Promise<any> => {
+  public update = async (req, res, client_id, data): Promise<any> => {
     try {
       const clientUpdated = await Client.updateOne(
         {
-          client_id: res.locals.client_id
+          client_id: client_id
         },
         {
           $set: data
@@ -72,16 +71,16 @@ export default class clientService {
     }
   };
 
-  public remove = async (req, res): Promise<any> => {
-    try {
-      const client = await Client.findByIdAndRemove(req.params.client_id);
-      return client;
-    } catch (err) {
-      res.status(500).send({
-        success: false,
-        message: err.toString(),
-        data: null
-      });
-    }
-  };
+  // public remove = async (req, res): Promise<any> => {
+  //   try {
+  //     const client = await Client.findByIdAndRemove(req.params.client_id);
+  //     return client;
+  //   } catch (err) {
+  //     res.status(500).send({
+  //       success: false,
+  //       message: err.toString(),
+  //       data: null
+  //     });
+  //   }
+  // };
 }

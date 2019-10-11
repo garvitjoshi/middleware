@@ -28,32 +28,6 @@
     }
   ],
   "paths": {
-    "/clients/register": {
-      "post": {
-        "tags": [
-          "clients"
-        ],
-        "summary": "Add a new client to the middleware",
-        "operationId": "addClient",
-        "requestBody": {
-          "description": "Client object that needs to be added to the middleware",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Clients"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "405": {
-            "description": "Invalid input",
-            "content": {}
-          }
-        }
-      }
-    },
     "/authenticate": {
       "post": {
         "tags": [
@@ -185,28 +159,6 @@
   },
   "components": {
     "schemas": {
-      "Clients": {
-        "type": "object",
-        "required": [
-          "name",
-          "client_id",
-          "client_secret"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Adobe Hub"
-          },
-          "client_id": {
-            "type": "string",
-            "example": "ADB-HUB"
-          },
-          "client_secret": {
-            "type": "string",
-            "example": "1234"
-          }
-        }
-      },
       "ClientsAuth": {
         "type": "object",
         "required": [
