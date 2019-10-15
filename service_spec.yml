@@ -86,4 +86,4 @@ environments:
         instances: 1
         access_level: corp
     regions:
-        - name: va6
+        - name: va7
