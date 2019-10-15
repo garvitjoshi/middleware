@@ -71,22 +71,6 @@ containers:
 environments:
   - name: Dev
     cluster_type: STAGE
-    rollback_on_failure: true
-    containers:
-      - id: opsmiddleware
-        topology: inet
-        inet_port: 8080
-        health_check:
-          path: /ping
-        cpus: 1
-        mem: 2048
-        instances: 1
-        access_level: corp
-    regions:
-        - name: va6
-
-  - name: Dev2
-    cluster_type: STAGE
     cluster_rbac_ldap:
       read:
         - GRP-OPS-TEST-GRP
@@ -102,8 +86,4 @@ environments:
         instances: 1
         access_level: corp
     regions:
-        - name: va7
         - name: va6
-        - name: irl1
-        - name: or2
-        - name: jpn3
