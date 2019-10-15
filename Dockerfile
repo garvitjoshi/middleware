@@ -16,6 +16,7 @@ RUN npm install --production
 
 COPY --from=builder /usr/app/dist ./dist
 COPY .env.dev .env
+COPY swagger.json swagger.json
 
 EXPOSE 8080
 CMD node dist/index.js
