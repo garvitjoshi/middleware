@@ -87,6 +87,9 @@ environments:
 
   - name: Dev2
     cluster_type: STAGE
+    cluster_rbac_ldap:
+      read:
+        - GRP-OPS-TEST-GRP
     rollback_on_failure: true
     containers:
       - id: opsmiddleware
@@ -100,3 +103,7 @@ environments:
         access_level: corp
     regions:
         - name: va7
+        - name: va6
+        - name: irl1
+        - name: or2
+        - name: jpn3
