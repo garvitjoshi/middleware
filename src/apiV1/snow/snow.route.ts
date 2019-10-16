@@ -9,5 +9,6 @@ const controller = new Controller();
 router.post("/openCase", verifyToken, controller.openCase);
 router.post("/closeCase", verifyToken, controller.closeCase);
 router.post("/openCloseCase", verifyToken, controller.openCloseCase);
+router.get("/getBanner", verifyToken, controller.getBanner);
 
 export default router;

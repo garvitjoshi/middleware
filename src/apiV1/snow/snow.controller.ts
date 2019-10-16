@@ -80,6 +80,26 @@ export default class SnowController {
     }
   };
 
+  public getBanner = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await this.checkApiAccess(req, res);
+
+      if (this.api_access === true) {
+        const result = await snowService.getBanner(req, res);
+        res.status(200).send({
+          success: true,
+          data: result
+        });
+      }
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null
+      });
+    }
+  };
+
   private openCaseValidation = (req: Request, res: Response) => {
     let data = {};
     let empty_data = {};
