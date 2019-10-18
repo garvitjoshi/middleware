@@ -82,6 +82,39 @@ export default class SnowService {
     }
   };
 
+  public getBanner = async (req, res): Promise<any> => {
+    try {
+
+      const params = {
+        sysparm_display_value: 'true',
+        tableName: 'chat_queue',
+        // sysparm_query: 'name=AdobeIT Service Desk Chat',
+        sysparm_fields: 'question,sys_id,name'
+      }
+
+      const options = {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          api_key: config.SNOW_API_KEY,
+          Authorization: await this.checkAuthToken(req, res)
+      };
+      const result = await axios.get(
+        `${config.SNOW_URL}/get_snow_data`,
+        {
+          params: params,
+          headers: options
+        }
+      );
+      return result.data;
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null
+      });
+    }
+  };
+
   private generateAuthCode = async (req, res): Promise<any> => {
     try {
       const params = {
