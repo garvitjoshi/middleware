@@ -13,10 +13,9 @@
   },
   "keywords": [
     "OPS-MIddleware",
-    "SNOW API'S",
     "Rest Api's"
   ],
-  "author": "gajoshi@adobe.com",
+  "author": "garvitjoshi@hotmail.com",
   "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.6",

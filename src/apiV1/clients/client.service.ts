@@ -40,7 +40,7 @@ export default class ClientService {
 
   public findOneByClientId = async (req, res, client_id): Promise<any> => {
     try {
-      const client = await Client.find({ client_id: client_id });
+      const client = await Client.find({ client_id });
       return client;
     } catch (err) {
       res.status(500).send({
@@ -55,7 +55,7 @@ export default class ClientService {
     try {
       const clientUpdated = await Client.updateOne(
         {
-          client_id: client_id
+          client_id
         },
         {
           $set: data

@@ -17,7 +17,7 @@ This is a Middleware for building scalable and robust REST APIs using Node.js & 
 
 ## Prerequisites
 
-You need to install [MongoDB](https://docs.mongodb.com/manual/administration/install-community/) either on your local machine or using a cloud service as [itcloud](https://itcloud.corp.adobe.com/).
+You need to install [MongoDB](https://docs.mongodb.com/manual/administration/install-community/) on your local machine or use database as service.
 
 ## Features
 
@@ -68,10 +68,6 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 │   │   │   ├── client.model.ts
 |   |   |   ├── client.service.ts
 │   │   │   └── client.route.ts
-│   │   ├── snow
-│   │   │   ├── snow.controller.ts
-|   |   |   ├── snow.service.ts
-│   │   │   └── snow.route.ts
 │   │   └── index.ts
 │   ├── config
 │   │   ├── config.ts
@@ -97,10 +93,7 @@ You need to install [MongoDB](https://docs.mongodb.com/manual/administration/ins
 | :-------  | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------   |
 | `POST`    | `/clients/register`  | Create a new client in the DB. You need to specify in the body the following attributes: name, client_id & client_secret.                     |
 | `POST`    | `/authenticate`      | Sign in with the client_id & client_secret. If it's successful, then generates a token                                                        |
-|           |                      | You need to specify the token in the header with the following format: `Authorization: Bearer your-token` in Below Api's.                     |
-| `POST`    | `/snow/openCase`     | Create snow ticket                                                                                                                            |
-| `POST`    | `/snow/closeCase`    | Modify snow ticket                                                                                                                            |
-| `POST`    | `/snow/openCloseCase`| Create and modify snow ticket                                                                                                                 |
+|           |                      | You need to specify the token in the header with the following format: `Authorization: Bearer your-token` in Below Api's.                     |                                                                                                           |
 <!-- | `GET`    | `/clients`           | Returns the collection of clients present in the DB.                                                                                      |
 | `GET`    | `/clients/:id`       | It returns the specified id client. You need to specify the token in the header with the following format: `Authorization: Bearer your-token` |
 | `PUT`    | `/clients/:id`       | Updates an already created client in the DB                                                                                                   |

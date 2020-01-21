@@ -1,7 +1,6 @@
 
 # By default, you MUST run `make build` first before running `docker-compose up`
 # Passing in `--build` or just simply running `docker-compose up` is not sufficient to
-# build the container. See [ASR-3118](https://jira.corp.adobe.com/browse/ASR-3118) for more details.
 version: '2'
 services:
   web:
